@@ -41,7 +41,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Doctorservices doctorServices;
+    private DoctorService doctorServices;
 
     @PrePersist
     public void assignId(){

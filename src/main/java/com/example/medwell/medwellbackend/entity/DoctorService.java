@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_doctorservices")
-public class Doctorservices {
+public class DoctorService {
 
 
     @Id
