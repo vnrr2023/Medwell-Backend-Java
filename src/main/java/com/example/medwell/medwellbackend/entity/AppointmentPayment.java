@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_appointmentpayment")
-public class DoctorAppointmentpayment  {
+public class AppointmentPayment {
 
     @Id
     @Column(name = "id", nullable = false,columnDefinition = "uuid")
@@ -28,7 +28,7 @@ public class DoctorAppointmentpayment  {
 
     @OneToOne
     @JoinColumn(name = "appointment_id", nullable = false)
-    private DoctorAppointment appointment;
+    private Appointment appointment;
 
     @PrePersist
     public void assignId(){

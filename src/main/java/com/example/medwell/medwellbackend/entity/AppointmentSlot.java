@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_appointmentslot")
-public class DoctorAppointmentslot {
+public class AppointmentSlot {
 
     @Id
     @Column(name = "id", nullable = false,columnDefinition = "uuid")
@@ -29,10 +29,10 @@ public class DoctorAppointmentslot {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
-    private AuthenticationCustomuser doctor;
+    private CustomUser doctor;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
-    private DoctorDoctoraddress doctoraddress;
+    private DoctorAddress doctorAddress;
 
 }

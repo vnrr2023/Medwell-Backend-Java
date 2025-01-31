@@ -1,10 +1,11 @@
 package com.example.medwell.medwellbackend.repository;
 
-import com.example.medwell.medwellbackend.entity.AuthenticationCustomuser;
+import com.example.medwell.medwellbackend.entity.AppointmentSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface AuthenticationCustomuserRepository extends JpaRepository<AuthenticationCustomuser, Long>{
+import java.util.UUID;
 
+public interface AppointmentSlotRepository extends JpaRepository<AppointmentSlot, UUID>{
 
 }

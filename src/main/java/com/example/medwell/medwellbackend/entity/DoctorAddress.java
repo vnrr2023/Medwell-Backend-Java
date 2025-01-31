@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.io.Serializable;
 import java.util.Map;
 
 
@@ -18,7 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_doctoraddress")
-public class DoctorDoctoraddress {
+public class DoctorAddress {
 
     @Id
     @Column(name = "id", nullable = false)
@@ -39,7 +38,7 @@ public class DoctorDoctoraddress {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
-    private AuthenticationCustomuser doctor;
+    private CustomUser doctor;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "timings",columnDefinition = "jsonb")

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 @Data
@@ -15,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_doctorservices")
-public class DoctorDoctorservices{
+public class Doctorservices {
 
 
     @Id
@@ -30,7 +29,7 @@ public class DoctorDoctorservices{
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
-    private AuthenticationCustomuser doctor;
+    private CustomUser doctor;
 
     @PrePersist
     public void assignId(){

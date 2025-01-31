@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_appointment")
-public class DoctorAppointment {
+public class Appointment {
 
     @Id
     @Column(name = "id", nullable = false,columnDefinition = "uuid")
@@ -30,19 +29,19 @@ public class DoctorAppointment {
 
     @ManyToOne
     @JoinColumn(name = "appointment_slot_id", nullable = false)
-    private DoctorAppointmentslot appointmentSlot;
+    private AppointmentSlot appointmentSlot;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
-    private AuthenticationCustomuser doctor;
+    private CustomUser doctor;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
-    private AuthenticationCustomuser patient;
+    private CustomUser patient;
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private DoctorDoctorservices doctorServices;
+    private Doctorservices doctorServices;
 
     @PrePersist
     public void assignId(){

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -18,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "doctor_doctorprofile")
-public class DoctorDoctorprofile{
+public class DoctorProfile {
 
     @Id
     @Column(name = "id", nullable = false,columnDefinition = "uuid")
@@ -59,7 +58,7 @@ public class DoctorDoctorprofile{
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private AuthenticationCustomuser user;
+    private CustomUser user;
 
     @Column(name = "speciality")
     private String speciality;

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "authentication_customuser")
-public class AuthenticationCustomuser {
+public class CustomUser {
 
     @Id
     @Column(name = "id", nullable = false)
