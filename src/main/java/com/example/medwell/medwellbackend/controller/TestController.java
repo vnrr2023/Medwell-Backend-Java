@@ -31,8 +31,15 @@ public class TestController {
 //        CustomUser user=customUserRepository.findById(148L).get();
 //        DoctorService doctorService= DoctorService.builder().serviceName("regular checkup").serviceAmount("500").doctor(user).build();
 //        doctorServiceRepository.save(doctorService);
-        token=token.substring(7);
-        System.out.println(jwtUtility.isValid(token));
+//        token=token.substring(7);
+//        System.out.println(jwtUtility.isValid(token));
+
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/test-server")
+    public String testServer(){
+        return  "Server is Up and running";
+
     }
 }

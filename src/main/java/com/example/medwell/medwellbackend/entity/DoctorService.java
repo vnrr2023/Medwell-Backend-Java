@@ -1,5 +1,6 @@
 package com.example.medwell.medwellbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class DoctorService {
     @Column(name = "service_amount")
     private String serviceAmount;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
     private CustomUser doctor;

@@ -1,7 +1,6 @@
 package com.example.medwell.medwellbackend;
 
-import com.example.medwell.medwellbackend.entity.CustomUser;
-import com.example.medwell.medwellbackend.repository.CustomUserRepository;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
