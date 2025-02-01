@@ -1,6 +1,9 @@
 package com.example.medwell.medwellbackend.entity;
 
+import com.example.medwell.medwellbackend.serializer.CustomUserSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,9 +31,9 @@ public class DoctorService {
     @Column(name = "service_amount")
     private String serviceAmount;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonIgnore
     private CustomUser doctor;
 
     @PrePersist

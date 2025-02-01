@@ -2,6 +2,7 @@ package com.example.medwell.medwellbackend.controller;
 
 
 import com.example.medwell.medwellbackend.dto.reqdto.DoctorServiceReqDto;
+import com.example.medwell.medwellbackend.entity.DoctorService;
 import com.example.medwell.medwellbackend.service.DoctorServiceService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,13 @@ public class DoctorServiceController {
     public ResponseEntity<?> getServices(HttpServletRequest request){
         String userId= (String) request.getAttribute("user_id");
         return doctorServiceService.getDoctorServices(userId);
+    }
+
+    @PostMapping("/update_service")
+    public ResponseEntity<?> updateService(@RequestBody DoctorServiceReqDto doctorServiceReqDto){
+        System.out.println(doctorServiceReqDto);
+        return doctorServiceService.updateDoctorService(doctorServiceReqDto);
+
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class DoctorServiceService {
@@ -35,6 +36,15 @@ public class DoctorServiceService {
         CustomUser doctor= customUserRepository.getReferenceById(Long.parseLong(userId));
         List<DoctorService> services = doctorServiceRepository.findByDoctorOrderByServiceAmountAsc(doctor);
         return ResponseEntity.status(200).body(Map.of("services",services));
+
+    }
+
+    public ResponseEntity<?> updateDoctorService(DoctorServiceReqDto doctorServiceReqDto) {
+        DoctorService service=doctorServiceRepository.getReferenceById(UUID.fromString(doctorServiceReqDto.getServiceId()));
+        service.setServiceName(doctorServiceReqDto.getServiceName());
+        service.setServiceAmount(doctorServiceReqDto.getAmount());
+        doctorServiceRepository.save(service);
+        return ResponseEntity.status(201).body(Map.of("mssg","updated service "+service.getServiceName()+" successfully"));
 
     }
 }

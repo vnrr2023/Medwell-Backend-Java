@@ -10,4 +10,6 @@ public class DoctorServiceReqDto {
     private String serviceName;
     @JsonProperty("amount")
     private String amount;
+    @JsonProperty("service_id")
+    private String serviceId;
 }

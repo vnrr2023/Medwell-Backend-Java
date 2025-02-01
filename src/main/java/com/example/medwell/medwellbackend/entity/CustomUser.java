@@ -25,8 +25,9 @@ public class CustomUser {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "last_login")
+    @Column(name = "last_login", columnDefinition = "TIMESTAMP")
     private LocalDateTime lastLogin;
+
 
     @Column(name = "is_superuser", nullable = false)
     private Boolean superuser;
