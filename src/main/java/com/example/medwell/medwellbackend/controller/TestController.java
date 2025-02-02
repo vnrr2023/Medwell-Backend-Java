@@ -5,6 +5,7 @@ import com.example.medwell.medwellbackend.entity.CustomUser;
 import com.example.medwell.medwellbackend.entity.DoctorService;
 import com.example.medwell.medwellbackend.repository.CustomUserRepository;
 import com.example.medwell.medwellbackend.repository.DoctorServiceRepository;
+import com.example.medwell.medwellbackend.scheduler.AppointmentScheduler;
 import com.example.medwell.medwellbackend.utility.JwtUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,12 @@ public class TestController {
     @Autowired
     private JwtUtility jwtUtility;
 
-    @GetMapping("/test")
-    public ResponseEntity<?> testUser(@RequestHeader("Authorization") String token){
-//        CustomUser user=customUserRepository.findById(148L).get();
-//        DoctorService doctorService= DoctorService.builder().serviceName("regular checkup").serviceAmount("500").doctor(user).build();
-//        doctorServiceRepository.save(doctorService);
-//        token=token.substring(7);
-//        System.out.println(jwtUtility.isValid(token));
+    @Autowired
+    private AppointmentScheduler scheduler;
 
+    @GetMapping("/test")
+    public ResponseEntity<?> testUser(){
+//        scheduler.createAppointmentSlots();
         return ResponseEntity.status(200).build();
     }
 

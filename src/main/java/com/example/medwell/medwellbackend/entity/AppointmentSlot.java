@@ -35,4 +35,11 @@ public class AppointmentSlot {
     @JoinColumn(name = "address_id")
     private DoctorAddress doctorAddress;
 
+    @PrePersist
+    public void assignId(){
+        if (this.id==null){
+            this.id=UUID.randomUUID();
+        }
+    }
+
 }

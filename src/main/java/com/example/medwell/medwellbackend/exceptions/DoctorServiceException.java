@@ -1,28 +1,18 @@
 package com.example.medwell.medwellbackend.exceptions;
 
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
 public class DoctorServiceException extends RuntimeException{
 
     private String mssg;
-    private int status;
+    private HttpStatus status;
 
-    public DoctorServiceException(String mssg, int status) {
+    public DoctorServiceException(String mssg, HttpStatus status) {
         this.mssg = mssg;
         this.status = status;
     }
 
-    public String getMssg() {
-        return mssg;
-    }
 
-    public void setMssg(String mssg) {
-        this.mssg = mssg;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 }
