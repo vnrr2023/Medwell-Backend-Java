@@ -20,8 +20,8 @@ public class DoctorMarkettingController {
 
     @PostMapping("/market_services")
     public ResponseEntity<?> marketServicesToCustomer(@RequestBody MarketToCustomersReqDto marketToCustomersReqDto, HttpServletRequest request) throws Exception {
-
-        markettingService.sendEmailToCustomer(marketToCustomersReqDto);
+        Long user_id=Long.parseLong((String) request.getAttribute("user_id"));
+        markettingService.sendEmailToCustomer(marketToCustomersReqDto,user_id);
         return ResponseEntity.status(200).build();
     }
 
