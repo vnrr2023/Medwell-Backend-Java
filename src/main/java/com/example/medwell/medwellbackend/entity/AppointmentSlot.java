@@ -1,5 +1,6 @@
 package com.example.medwell.medwellbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,10 +28,12 @@ public class AppointmentSlot {
     @Column(name = "date")
     private LocalDate date;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
     private CustomUser doctor;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "address_id")
     private DoctorAddress doctorAddress;
