@@ -44,7 +44,17 @@ public class DoctorServiceService {
         service.setServiceName(doctorServiceReqDto.getServiceName());
         service.setServiceAmount(doctorServiceReqDto.getAmount());
         doctorServiceRepository.save(service);
-        return ResponseEntity.status(201).body(Map.of("mssg","updated service "+service.getServiceName()+" successfully"));
+        return ResponseEntity.status(201).body(Map.of("mssg","updated service "+service.getServiceName()+" successfully","service",service));
 
+    }
+
+    public ResponseEntity<?> deleteServiceForDoctor(String serviceId) {
+        DoctorService service=doctorServiceRepository.getReferenceById(UUID.fromString(serviceId));
+        if (service==null){
+            return ResponseEntity.status(400).body(Map.of("mssg","No such service found"));
+        }
+        String serviceName=service.getServiceName();
+        doctorServiceRepository.delete(service);
+        return ResponseEntity.status(200).body(Map.of("Mssg","Deleted service named "+serviceName));
     }
 }

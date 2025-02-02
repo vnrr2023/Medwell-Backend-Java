@@ -3,6 +3,7 @@ package com.example.medwell.medwellbackend.controller;
 
 import com.example.medwell.medwellbackend.dto.reqdto.DoctorServiceReqDto;
 import com.example.medwell.medwellbackend.entity.DoctorService;
+import com.example.medwell.medwellbackend.exceptions.DoctorServiceException;
 import com.example.medwell.medwellbackend.service.DoctorServiceService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,13 @@ public class DoctorServiceController {
         return doctorServiceService.updateDoctorService(doctorServiceReqDto);
 
     }
+
+    @PostMapping("/delete_service")
+    public   ResponseEntity<?> deleteDoctorService(@RequestBody DoctorServiceReqDto doctorServiceReqDto){
+        return doctorServiceService.deleteServiceForDoctor(doctorServiceReqDto.getServiceId());
+    }
+
+    @ExceptionHandler(DoctorServiceException.class)
+    public
 
 }
