@@ -25,11 +25,11 @@ public class AppointmentSlotService {
     @Autowired
     private DoctorAddressRepository doctorAddressRepository;
 
-    public ResponseEntity<?> showSlots(GetSlotsReqDto getSlotsReqDto) {
+    public ResponseEntity<?> showSlots(String date,Long addressId) {
 
-        DoctorAddress address=doctorAddressRepository.getReferenceById(Long.parseLong(getSlotsReqDto.getAddressId()));
+        DoctorAddress address=doctorAddressRepository.getReferenceById(addressId);
         List<AppointmentSlot> appointmentSlotList=appointmentSlotRepository
-                .findByDoctorAddressAndDateOrderByTimingAsc(address, LocalDate.parse(getSlotsReqDto.getDate()));
+                .findByDoctorAddressAndDateOrderByTimingAsc(address, LocalDate.parse(date));
         return ResponseEntity.status(200).body(appointmentSlotList);
 
     }

@@ -13,20 +13,20 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private AuthInterceptor authInterceptor;
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedMethods("*")
-                .allowCredentials(true)
-                .allowedHeaders("*")
-                .maxAge(3600)
-                .allowedOrigins("http://localhost:8000");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedMethods("*")
+//                .allowCredentials(true)
+//                .allowedHeaders("*")
+//                .maxAge(3600)
+//                .allowedOrigins("http://localhost:8000");
+//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/doctor_service/*","/marketting/*")
-                .excludePathPatterns();
+                .addPathPatterns("/doctor_service/*","/marketting/*","/appointment/*")
+                .excludePathPatterns("/marketting/generate_mail_body");
     }
 }

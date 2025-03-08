@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Confirmation</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .header {
+        background: linear-gradient(to right, #ef4444,#3b82f6);
+        color: #ffffff;
+        padding: 20px;
+        font-size: 22px;
+        font-weight: bold;
+        border-radius: 8px 8px 0 0;
+    }
+    .logo {
+        max-width: 100px;
+        margin-bottom: 10px;
+    }
+    .content {
+        padding: 20px;
+        font-size: 16px;
+        color: #333333;
+        text-align: left;
+    }
+    .footer {
+        background: linear-gradient(to right, #ef4444,#3b82f6);
+        color: white;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 0 0 8px 8px;
+    }
+    .button {
+        display: inline-block;
+        margin: 10px;
+        padding: 12px 24px;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: 0.3s ease-in-out;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-primary {
+        background: linear-gradient(to right, #28a745, #34d058);
+    }
+    .btn-primary:hover {
+        background: linear-gradient(to right, #34d058, #28a745);
+    }
+    .btn-secondary {
+        background: linear-gradient(to right, #ff4747, #ff6b6b);
+    }
+    .btn-secondary:hover {
+        background: linear-gradient(to right, #ff6b6b, #ff4747);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <img src="https://imedwell.vercel.app/logo.png" alt="Clinic Logo" class="logo">
+    <br>
+    Appointment Confirmation ✅
+  </div>
+
+  <div class="content">
+    <p>Dear <strong th:text="${patientName}"></strong>,</p>
+    <p>Your appointment with <strong th:text="${doctorName}"></strong> has been successfully booked.</p>
+    <p><strong>Appointment Details:</strong></p>
+    <ul>
+      <li><strong>Date and Time :</strong> <span th:text="${appointmentTime}"></span></li>
+      <li><strong>Location:</strong> <span th:text="${doctorAddress}"></span></li>
+    </ul>
+
+    <p>Thank you for choosing our clinic! We look forward to serving you. If you have any questions, feel free to contact us.</p>
+
+    <a th:href="@{${appointmentDetailsUrl}}" class="button btn-primary">View Appointment Details</a>
+    <a th:href="'https://www.google.com/maps?q=' + ${doctorLat} + ',' + ${doctorLon}" class="button btn-secondary">
+      Open in Google Maps
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 Your Clinic Name | Contact: +123 456 7890 | Email: support@yourclinic.com</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -9,6 +9,7 @@ target/
 *.iml
 *.ipr
 src/main/resources/secrets.properties
+src/main/resources/application.properties
 
 
 

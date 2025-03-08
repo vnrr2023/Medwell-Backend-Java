@@ -6,6 +6,7 @@ import com.example.medwell.medwellbackend.entity.DoctorService;
 import com.example.medwell.medwellbackend.repository.CustomUserRepository;
 import com.example.medwell.medwellbackend.repository.DoctorServiceRepository;
 import com.example.medwell.medwellbackend.scheduler.AppointmentScheduler;
+import com.example.medwell.medwellbackend.service.GroqUtility;
 import com.example.medwell.medwellbackend.utility.JwtUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +31,12 @@ public class TestController {
     @Autowired
     private AppointmentScheduler scheduler;
 
+    @Autowired
+    private GroqUtility groqUtility;
+
     @GetMapping("/test")
     public ResponseEntity<?> testUser(){
-//        scheduler.createAppointmentSlots();
+//        groqUtility.chatWithGroq("regarding launching of new service named ECG","write attractive mail t");
         return ResponseEntity.status(200).build();
     }
 

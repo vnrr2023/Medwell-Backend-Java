@@ -24,23 +24,7 @@ public class MailUtility {
     @Autowired
     private TemplateEngine engine;
 
-    @Async
-    public void sendAppointmentSlotCreationMail(String emailId, Map<String, Object> data) throws Exception{
-        Context context =new Context();
-        context.setVariables(data);
-        String htmlContent=engine.process("appointmentCreation",context);
-        MimeMessage mimeMessage=mailSender.createMimeMessage();
-        MimeMessageHelper helper=new MimeMessageHelper(mimeMessage,true);
-        helper.setFrom("csgptmail@gmail.com");
-        helper.setTo(emailId);
-        helper.setText(htmlContent,true);
-        helper.setSubject("Regarding Appointment Creation for the Next Week");
-        mailSender.send(mimeMessage);
-
-    }
-
-    @Async
-    public void sendMarkettingEmails(String emailId,String htmlContent,String subject) throws Exception {
+    private void sendHtmlMail(String emailId,String subject,String htmlContent) throws MessagingException {
         MimeMessage mimeMessage=mailSender.createMimeMessage();
         MimeMessageHelper helper=new MimeMessageHelper(mimeMessage,true);
         helper.setFrom("csgptmail@gmail.com");
@@ -49,4 +33,53 @@ public class MailUtility {
         helper.setSubject(subject);
         mailSender.send(mimeMessage);
     }
+
+    @Async
+    public void sendAppointmentSlotCreationMail(String emailId, Map<String, Object> data) throws Exception{
+        Context context =new Context();
+        context.setVariables(data);
+        String htmlContent=engine.process("appointmentCreation",context);
+        sendHtmlMail(emailId,"Regarding Appointment Creation for the Next Week",htmlContent);
+
+    }
+
+    @Async
+    public void sendMarkettingEmails(String emailId,String htmlContent,String subject) throws Exception {
+        sendHtmlMail(emailId,subject,htmlContent);
+    }
+
+    @Async
+    public void sendReminderMail(String email,String subject,String doctorName,String patientName,String address,String appointmentTime,double lat,double lon) throws MessagingException {
+        Context context = new Context();
+        context.setVariables(Map.of(
+                "doctorName", doctorName,
+                "patientName", patientName,
+                "doctorAddress", address,
+                "appointmentTime", appointmentTime,
+                "appointmentUrl", "https://medwell2.vercel.app/",
+                "latitude", lat,
+                "longitude", lon
+        )
+        );
+        String htmlContent = engine.process("reminderTemplate", context);
+        sendHtmlMail(email,subject,htmlContent);
+    }
+
+    @Async
+    public void sendAppointmentConfirmationMail(String email,String subject,String doctorName,String patientName,String address,String appointmentTime,double lat,double lon) throws MessagingException {
+        Context context = new Context();
+        context.setVariables(Map.of(
+                        "doctorName", doctorName,
+                        "patientName", patientName,
+                        "doctorAddress", address,
+                        "appointmentTime", appointmentTime,
+                        "appointmentDetailsUrl", "https://medwell2.vercel.app/",
+                        "doctorLat", lat,
+                        "doctorLon", lon
+                )
+        );
+        String htmlContent = engine.process("appointmentBookingSuccess", context);
+        sendHtmlMail(email,subject,htmlContent);
+    }
+
 }

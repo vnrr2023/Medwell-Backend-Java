@@ -16,6 +16,7 @@ public class SecretsLoader {
     private final String JWT_SECRET;
     private final int emailPort,redisPort;
     private final String redisHost,redisPassword;
+    private final String groqApiKey;
 
     public SecretsLoader() throws  Exception{
         Properties props=new Properties();
@@ -29,6 +30,7 @@ public class SecretsLoader {
         this.redisHost=props.getProperty("redisHost");
         this.redisPassword=props.getProperty("redisPassword");
         this.redisPort=Integer.parseInt(props.getProperty("redisPort"));
+        this.groqApiKey=props.getProperty("groqApiKey");
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.medwell.medwellbackend.entity;
 
+import com.example.medwell.medwellbackend.serializer.CustomUserSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +40,7 @@ public class DoctorAddress {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonSerialize(using = CustomUserSerializer.class)
     private CustomUser doctor;
 
     @JdbcTypeCode(SqlTypes.JSON)

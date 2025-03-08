@@ -32,10 +32,10 @@ public class DoctorServiceService {
         return ResponseEntity.status(201).body(Map.of("mssg","Service "+doctorServiceReqDto.getServiceName()+" added successfully"));
     }
 
-    public ResponseEntity<?> getDoctorServices(String userId) {
-        CustomUser doctor= customUserRepository.getReferenceById(Long.parseLong(userId));
+    public List<DoctorService>  getDoctorServices(Long userId) {
+        CustomUser doctor= customUserRepository.getReferenceById(userId);
         List<DoctorService> services = doctorServiceRepository.findByDoctorOrderByServiceAmountAsc(doctor);
-        return ResponseEntity.status(200).body(Map.of("services",services));
+        return services;
 
     }
 

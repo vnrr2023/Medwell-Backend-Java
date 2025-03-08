@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/doctor_service")
@@ -27,9 +29,10 @@ public class DoctorServiceController {
     }
 
     @GetMapping("/get_services")
-    public ResponseEntity<?> getServices(HttpServletRequest request){
-        String userId= (String) request.getAttribute("user_id");
-        return doctorServiceService.getDoctorServices(userId);
+    public ResponseEntity<?> getServices(@RequestAttribute("user_id") Long user_id){
+//        String userId= (String) request.getAttribute("user_id");
+        List<DoctorService> doctorServices= doctorServiceService.getDoctorServices(user_id);
+        return ResponseEntity.status(200).body(Map.of("services",doctorServices));
     }
 
     @PostMapping("/update_service")

@@ -27,7 +27,7 @@ public class DoctorMarkettingService {
 
     public void sendEmailToCustomer(MarketToCustomersReqDto marketToCustomersReqDto, Long user_id) throws Exception {
         CustomUser doctor=customUserRepository.getReferenceById(user_id);
-        DoctorServiceMarketting serviceMarketting=DoctorServiceMarketting.builder().html(marketToCustomersReqDto.getHtml()).doctor(doctor).build();
+        DoctorServiceMarketting serviceMarketting=DoctorServiceMarketting.builder().html(marketToCustomersReqDto.getHtml()).doctor(doctor).customerCount(marketToCustomersReqDto.getEmails().size()).build();
         serviceMarkettingRepository.save(serviceMarketting);
         for(String customerEmail:marketToCustomersReqDto.getEmails()){
             mailUtility.sendMarkettingEmails(customerEmail,marketToCustomersReqDto.getHtml(),marketToCustomersReqDto.getSubject());

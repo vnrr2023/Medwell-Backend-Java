@@ -40,6 +40,7 @@ public class AppointmentScheduler {
     @Autowired
     private MailUtility mailUtility;
 
+
     @Scheduled(cron = "0 0 23 ? * WED")
     public void createAppointmentSlots() throws Exception {
         List<DoctorProfile> doctorProfileList = doctorProfileRepository.findAll();
@@ -87,6 +88,9 @@ public class AppointmentScheduler {
         }
 
     }
+
+
+
 
 
 

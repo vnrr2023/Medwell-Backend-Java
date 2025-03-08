@@ -31,6 +31,9 @@ public class DoctorServiceMarketting {
     @JsonIgnore
     private CustomUser doctor;
 
+    @Column(name = "customer_count")
+    private int customerCount;
+
     @PrePersist
     public void assignId(){
         if (this.id==null){

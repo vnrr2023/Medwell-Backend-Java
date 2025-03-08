@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Reminder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .details {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 10px 5px;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #28a745;
+        }
+        .btn-secondary:hover {
+            background-color: #1e7e34;
+        }
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: white;
+            color: #fff;
+            border-radius: 0 0 8px 8px;
+            border-top: 2px solid #eee;
+        }
+        .footer img {
+            width: 100px;
+            margin-bottom: 5px;
+        }
+        .footer p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h2>📅 Appointment Reminder</h2>
+        <p>Dear <span th:text="${patientName}"></span>,</p>
+    </div>
+
+    <!-- Reminder Message -->
+    <p>We hope you are doing well! This is a friendly reminder that your appointment with <strong>Dr. <span th:text="${doctorName}"></span></strong> is coming up soon.</p>
+
+    <p>⏳ Your appointment is in <strong th:text="${timeRemaining}"></strong>.</p>
+
+    <!-- Appointment Details -->
+    <div class="details">
+        <p><strong>🩺 Doctor:</strong> <span th:text="${doctorName}"></span></p>
+        <p><strong>👤 Patient:</strong> <span th:text="${patientName}"></span></p>
+        <p><strong>📍 Address:</strong> <span th:text="${doctorAddress}"></span></p>
+        <p><strong>🕒 Time Slot:</strong> <span th:text="${appointmentTime}"></span></p>
+    </div>
+
+    <p>If you have any questions or need to reschedule, feel free to contact us.</p>
+
+    <!-- Action Buttons -->
+    <div style="text-align: center;">
+        <a th:href="${appointmentUrl}" class="btn btn-primary">View Appointment Details</a>
+        <a th:href="@{'https://www.google.com/maps/search/?api=1&query=' + ${latitude} + ',' + ${longitude}}"
+           class="btn btn-secondary">Get Directions</a>
+    </div>
+
+    <p>Thank you for choosing our healthcare services. We look forward to seeing you soon!</p>
+
+    <!-- Footer -->
+    <div class="footer">
+        <img src="https://imedwell.vercel.app/logo.png" alt="Company Logo">
+        <p>&copy; 2025 MedWell All rights reserved.</p>
+    </div>
+</div>
+
+</body>
+</html>
