@@ -6,18 +6,14 @@ import com.example.medwell.medwellbackend.repository.AppointmentSlotRepository;
 import com.example.medwell.medwellbackend.repository.CustomUserRepository;
 import com.example.medwell.medwellbackend.repository.DoctorServiceRepository;
 import com.example.medwell.medwellbackend.scheduler.AppointmentEmailScheduler;
-import com.example.medwell.medwellbackend.scheduler.AppointmentScheduler;
-import com.example.medwell.medwellbackend.utility.MailUtility;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.Map;
 
@@ -38,7 +34,6 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentEmailScheduler appointmentEmailScheduler;
-
 
     public ResponseEntity<?> createAppointmentPatient(Long userId, String serviceId, String doctorId, String slotId) throws MessagingException {
         CustomUser patient=userRepository.getReferenceById(userId);

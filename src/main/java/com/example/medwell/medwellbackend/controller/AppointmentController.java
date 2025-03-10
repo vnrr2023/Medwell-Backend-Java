@@ -8,7 +8,6 @@ import com.example.medwell.medwellbackend.service.AppointmentService;
 import com.example.medwell.medwellbackend.service.DoctorAdressService;
 import com.example.medwell.medwellbackend.service.DoctorServiceService;
 import jakarta.mail.MessagingException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,17 +37,6 @@ public class AppointmentController {
 
     }
 
-    @GetMapping("/get-doctor-addresses/{doctor_id}")
-    public ResponseEntity<?> getDoctorAddresses(@PathVariable(value = "doctor_id",required = true) Long doctor_id){
-        List<DoctorAddress> addressList=adressService.getDoctorAdresses(doctor_id);
-        return ResponseEntity.status(200).body(addressList);
-    }
-
-    @GetMapping("/get-doctor-services/{doctor_id}")
-    public ResponseEntity<?> getDoctorServices(@PathVariable(value = "doctor_id",required = true) Long doctor_id){
-        List<DoctorService> serviceList=doctorServiceService.getDoctorServices(doctor_id);
-        return ResponseEntity.status(200).body(serviceList);
-    }
 
 
 
