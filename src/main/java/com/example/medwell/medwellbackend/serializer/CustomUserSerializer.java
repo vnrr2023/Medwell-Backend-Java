@@ -14,6 +14,7 @@ public class CustomUserSerializer extends JsonSerializer<CustomUser>{
     public void serialize(CustomUser customUser, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("id", String.valueOf(customUser.getId()));
+        jsonGenerator.writeStringField("name", String.valueOf(customUser.getFirstName()+" "+customUser.getLastName()));
         jsonGenerator.writeEndObject();
     }
 }

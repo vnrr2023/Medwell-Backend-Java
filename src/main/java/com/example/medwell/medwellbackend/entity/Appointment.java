@@ -1,5 +1,8 @@
 package com.example.medwell.medwellbackend.entity;
 
+import com.example.medwell.medwellbackend.serializer.CustomUserSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,10 +36,12 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonSerialize(using = CustomUserSerializer.class)
     private CustomUser doctor;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
+    @JsonSerialize(using = CustomUserSerializer.class)
     private CustomUser patient;
 
     @ManyToOne
