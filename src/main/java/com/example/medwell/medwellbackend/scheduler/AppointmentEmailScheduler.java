@@ -1,11 +1,15 @@
 package com.example.medwell.medwellbackend.scheduler;
 
 
+import com.example.medwell.medwellbackend.dto.reqdto.AppointmentMessage;
 import com.example.medwell.medwellbackend.utility.MailUtility;
+import com.example.medwell.medwellbackend.utility.MessagingUtility;
 import jakarta.mail.MessagingException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -21,6 +25,9 @@ public class AppointmentEmailScheduler {
 
     private final TaskScheduler taskScheduler;
     private final MailUtility mailUtility;
+
+    @Autowired
+    private MessagingUtility messagingUtility;
 
 
     public AppointmentEmailScheduler( MailUtility mailUtility) {
@@ -44,6 +51,19 @@ public class AppointmentEmailScheduler {
 
         mailUtility.sendAppointmentConfirmationMail(email,
                 String.format("✅ You're All Set! Your Appointment with Dr. %s is Confirmed",doctorName),doctorName,patientName,address, formatDate(appointmentTime),lat,lon);
+
+        messagingUtility.sendAppointmentMessage(
+                AppointmentMessage.builder()
+                        .patientName(patientName)
+                        .doctorName(doctorName)
+                        .address(address)
+                        .mobileNumber("7506375933")
+                        .detailsLink("https://medwell2.vercel.app/doctor")
+                        .datetime(appointmentTime.toString())
+                        .directionLink(String.format("https://www.google.com/maps?q=%s,%s",lat,lon))
+                        .build()
+        );
+
 
         scheduleReminders("1_day",appointmentTime,24 * 60 * 60 * 1000,email,doctorName,patientName,address,lat,lon);
         scheduleReminders("12_hours",appointmentTime,12 * 60 * 60 * 1000,email,doctorName,patientName,address,lat,lon);

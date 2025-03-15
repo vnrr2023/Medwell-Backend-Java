@@ -32,4 +32,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID>{
     List<Appointment> findByMonthYearAndDoctor(@Param("month") int month, @Param("year") int year, @Param("doctorId") Long doctorId);
 
 
+    @Query("SELECT DISTINCT a.patient FROM Appointment a WHERE a.doctor = :doctor")
+    List<CustomUser> findUniquePatientsByDoctor(@Param("doctor") CustomUser doctor);
+
+
 }

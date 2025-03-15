@@ -1,12 +1,15 @@
 package com.example.medwell.medwellbackend.service;
 
+import com.example.medwell.medwellbackend.dto.reqdto.AppointmentMessage;
 import com.example.medwell.medwellbackend.entity.*;
 import com.example.medwell.medwellbackend.repository.AppointmentRepository;
 import com.example.medwell.medwellbackend.repository.AppointmentSlotRepository;
 import com.example.medwell.medwellbackend.repository.CustomUserRepository;
 import com.example.medwell.medwellbackend.repository.DoctorServiceRepository;
 import com.example.medwell.medwellbackend.scheduler.AppointmentEmailScheduler;
+import com.example.medwell.medwellbackend.utility.MessagingUtility;
 import jakarta.mail.MessagingException;
+import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +45,9 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentEmailScheduler appointmentEmailScheduler;
+
+    @Autowired
+    private MessagingUtility messagingUtility;
 
     private static final DateTimeFormatter TIME_FORMATTER =  DateTimeFormatter.ofPattern("HH:mm");
 

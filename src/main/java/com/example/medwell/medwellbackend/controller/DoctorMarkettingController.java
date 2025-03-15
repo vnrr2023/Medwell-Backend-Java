@@ -5,6 +5,7 @@ import com.example.medwell.medwellbackend.dto.reqdto.GenerateMarkettingMailBodyR
 import com.example.medwell.medwellbackend.dto.reqdto.MarketToCustomersReqDto;
 import com.example.medwell.medwellbackend.service.DoctorMarkettingService;
 import com.example.medwell.medwellbackend.service.GroqUtility;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +44,13 @@ public class DoctorMarkettingController {
 //        return groqUtility.chatWithGroq(reqDto.getSubject());
 //
 //    }
+
+    @PostMapping("/whatsapp")
+    public ResponseEntity<?> marketUsingWhatsApp(@RequestAttribute("user_id") long userId,
+                                                 @RequestParam("message") String message
+    ) throws JsonProcessingException {
+        markettingService.sendWhatsAppMessages(userId,message);
+        return ResponseEntity.status(200).build();
+    }
 
 }
