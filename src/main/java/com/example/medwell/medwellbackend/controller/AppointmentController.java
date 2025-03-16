@@ -115,6 +115,25 @@ public class AppointmentController {
     }
 
 
+    @PostMapping("/patient/cancel")
+    public ResponseEntity<?> cancelAppointmentFromPatient(@RequestBody Map<String,String> data){
+        boolean status=appointmentService.cancelAppointmentFromPatient(data.get("appointmentId"),data.get("date"),data.get("time"));
+        if (!status) return ResponseEntity.status(400).body(Map.of("message","Cancellation only allowed before 3 hours of appointment time"));
+        return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("/doctor/shift")
+    public ResponseEntity<?> shiftAppointment(@RequestBody Map<String,String> data) throws JsonProcessingException {
+        appointmentService.shiftAppointment(data.get("appointmentId"),data.get("shiftedSlotId"),data.get("message"));
+        return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("/patient/action")
+    public ResponseEntity<?> performActiononAppointShift(@RequestBody Map<String,String> data){
+        appointmentService.acceptOrRejectShiftedAppointment(data.get("action"),data.get("message"),data.get("shiftedAppointmentId"));
+        return ResponseEntity.status(200).build();
+    }
+
 
 
 

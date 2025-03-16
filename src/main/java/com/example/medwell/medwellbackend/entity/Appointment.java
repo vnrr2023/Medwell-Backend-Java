@@ -31,21 +31,21 @@ public class Appointment {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "appointment_slot_id", nullable = false)
+    @JoinColumn(name = "appointment_slot_id", nullable = true)
     private AppointmentSlot appointmentSlot;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id", nullable = false)
+    @JoinColumn(name = "doctor_id", nullable = true)
     @JsonSerialize(using = CustomUserSerializer.class)
     private CustomUser doctor;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_id", nullable = true)
     @JsonSerialize(using = CustomUserSerializer.class)
     private CustomUser patient;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
+    @JoinColumn(name = "service_id", nullable = true)
     private DoctorService doctorServices;
 
     @PrePersist

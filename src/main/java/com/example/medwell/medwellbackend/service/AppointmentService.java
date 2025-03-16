@@ -1,16 +1,12 @@
 package com.example.medwell.medwellbackend.service;
 
-import com.example.medwell.medwellbackend.dto.reqdto.AppointmentMessage;
 import com.example.medwell.medwellbackend.entity.*;
-import com.example.medwell.medwellbackend.repository.AppointmentRepository;
-import com.example.medwell.medwellbackend.repository.AppointmentSlotRepository;
-import com.example.medwell.medwellbackend.repository.CustomUserRepository;
-import com.example.medwell.medwellbackend.repository.DoctorServiceRepository;
+import com.example.medwell.medwellbackend.repository.*;
 import com.example.medwell.medwellbackend.scheduler.AppointmentEmailScheduler;
 import com.example.medwell.medwellbackend.utility.MessagingUtility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.mail.MessagingException;
-import org.aspectj.bridge.MessageUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,6 +42,9 @@ public class AppointmentService {
 
     @Autowired
     private MessagingUtility messagingUtility;
+
+    @Autowired
+    private ShiftedAppointmentRepository shiftedAppointmentRepository;
 
     private static final DateTimeFormatter TIME_FORMATTER =  DateTimeFormatter.ofPattern("HH:mm");
 
@@ -80,6 +76,7 @@ public class AppointmentService {
                 .patient(patient)
                 .doctorServices(service)
                 .appointmentSlot(appointmentSlot)
+                .status("BOOKED")
                 .build();
 
         appointmentRepository.save(appointment);
@@ -126,4 +123,75 @@ public class AppointmentService {
         if (isDoctor) return appointmentRepository.findByMonthYearAndDoctor(month,year,userId);
         return appointmentRepository.findByMonthYearAndPatient(month,year,userId);
     }
+
+    @Transactional
+    public boolean cancelAppointmentFromPatient(String appointmentId, String date, String time) {
+        Appointment appointment=appointmentRepository.getReferenceById(UUID.fromString(appointmentId));
+        AppointmentSlot appointmentSlot=appointment.getAppointmentSlot();
+        LocalTime localTime=LocalTime.parse(appointmentSlot.getTiming());
+        LocalDateTime dateTime=LocalDateTime.of(appointmentSlot.getDate(),localTime);
+        if (LocalDateTime.now().isAfter(dateTime.minusHours(3))){
+            return false;
+        }
+        appointmentSlot.setStatus("Available");
+        appointmentSlotRepository.save(appointmentSlot);
+        appointment.setStatus("Available");
+        appointment.setPatient(null);
+        appointment.setDoctor(null);
+        appointment.setAppointmentSlot(null);
+        appointment.setDoctorServices(null);
+        appointmentRepository.save(appointment);
+        return true;
+    }
+
+
+    public void shiftAppointment(String appointmentId, String shiftedSlotId, String message) throws JsonProcessingException {
+        Appointment appointment=appointmentRepository.getReferenceById(UUID.fromString(appointmentId));
+        AppointmentSlot shiftedSlot=appointmentSlotRepository.getReferenceById(UUID.fromString(shiftedSlotId));
+        AppointmentSlot appointmentSlot=appointment.getAppointmentSlot();
+        appointmentSlot.setStatus("SHIFTED");
+        appointment.setStatus("SHIFTED");
+        shiftedSlot.setStatus("PENDING");
+        appointmentSlotRepository.save(shiftedSlot);
+        appointmentSlotRepository.save(appointmentSlot);
+        ShiftedAppointment shiftedAppointment=ShiftedAppointment.builder()
+                .appointment(appointment)
+                .appointmentSlot(shiftedSlot)
+                .doctorMessage(message)
+                .build();
+        messagingUtility.sendMarkettingMessage(String.format("""
+                Your appointment with *Doctor : %s* for *%s* has been shifted. 📅
+                New Slot: %s at %s
+                Previous Slot: %s at %s
+                Reason: %s
+                Please confirm your availability. ✅
+                """,appointment.getDoctor().getFirstName(),appointment.getDoctorServices().getServiceName(),shiftedSlot.getDate(),shiftedSlot.getTiming(),appointmentSlot.getDate(),appointmentSlot.getTiming(),message),List.of("7506375933"));
+
+
+        shiftedAppointmentRepository.save(shiftedAppointment);
+
+    }
+
+    public void acceptOrRejectShiftedAppointment(String action, String message, String shiftedAppointmentId){
+
+        ShiftedAppointment shiftedAppointment=shiftedAppointmentRepository.getReferenceById(UUID.fromString(shiftedAppointmentId));
+        Appointment appointment=shiftedAppointment.getAppointment();
+        AppointmentSlot appointmentSlot=shiftedAppointment.getAppointmentSlot();
+        if(action.equals("ACCEPT")){
+            shiftedAppointment.setPatientAccepted(true);
+            appointment.setStatus("BOOKED");
+            appointmentSlot.setStatus("BOOKED");
+            shiftedAppointment.setPatientMessage(message);
+        }
+        else{
+            appointment.setStatus(null);
+            appointmentSlot.setStatus("Available");
+            shiftedAppointment.setPatientMessage(message);
+        }
+        appointmentSlotRepository.save(appointmentSlot);
+        appointmentRepository.save(appointment);
+        shiftedAppointmentRepository.save(shiftedAppointment);
+
+    }
 }
+
