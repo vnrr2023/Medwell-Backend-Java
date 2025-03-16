@@ -39,11 +39,7 @@ public class DoctorMarkettingController {
 
     }
 
-//    @PostMapping("/generate_mail_body")
-//    public ResponseEntity<?> generateMailBody(@RequestBody GenerateMarkettingMailBodyReqDto reqDto) throws Exception {
-//        return groqUtility.chatWithGroq(reqDto.getSubject());
-//
-//    }
+
 
     @PostMapping("/whatsapp")
     public ResponseEntity<?> marketUsingWhatsApp(@RequestAttribute("user_id") long userId,
