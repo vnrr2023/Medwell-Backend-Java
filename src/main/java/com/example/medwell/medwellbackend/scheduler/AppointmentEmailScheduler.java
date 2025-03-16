@@ -4,12 +4,12 @@ package com.example.medwell.medwellbackend.scheduler;
 import com.example.medwell.medwellbackend.dto.reqdto.AppointmentMessage;
 import com.example.medwell.medwellbackend.utility.MailUtility;
 import com.example.medwell.medwellbackend.utility.MessagingUtility;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -47,7 +47,7 @@ public class AppointmentEmailScheduler {
     }
 
     @Async
-    public void createRemindersAndSendConfirmationMail(String email,String doctorName,String patientName,String address,LocalDateTime appointmentTime,double lat,double lon) throws MessagingException {
+    public void createRemindersAndSendConfirmationMail(String email,String doctorName,String patientName,String address,LocalDateTime appointmentTime,double lat,double lon) throws MessagingException, JsonProcessingException {
 
         mailUtility.sendAppointmentConfirmationMail(email,
                 String.format("✅ You're All Set! Your Appointment with Dr. %s is Confirmed",doctorName),doctorName,patientName,address, formatDate(appointmentTime),lat,lon);

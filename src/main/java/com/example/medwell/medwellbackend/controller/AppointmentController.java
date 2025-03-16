@@ -8,6 +8,7 @@ import com.example.medwell.medwellbackend.entity.DoctorService;
 import com.example.medwell.medwellbackend.service.AppointmentService;
 import com.example.medwell.medwellbackend.service.DoctorAdressService;
 import com.example.medwell.medwellbackend.service.DoctorServiceService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +38,7 @@ public class AppointmentController {
     private DoctorServiceService doctorServiceService;
 
     @PostMapping("/patient/create")
-    public ResponseEntity<?> createAppointmentFromPatient(@RequestBody AppointmentForPatientReqDto patientReqDto, @RequestAttribute("user_id") Long user_id) throws MessagingException {
+    public ResponseEntity<?> createAppointmentFromPatient(@RequestBody AppointmentForPatientReqDto patientReqDto, @RequestAttribute("user_id") Long user_id) throws MessagingException, JsonProcessingException {
 
         return appointmentService.createAppointmentPatient(user_id,patientReqDto.getService_id(),patientReqDto.getDoctor_id(),patientReqDto.getSlot_id());
 

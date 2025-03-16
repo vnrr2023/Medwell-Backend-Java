@@ -26,11 +26,12 @@ public class MessagingUtility {
     private RestTemplate restTemplate;
 
     @Async
-    public void sendAppointmentMessage(AppointmentMessage message){
+    public void sendAppointmentMessage(AppointmentMessage message) throws JsonProcessingException {
 
         HttpHeaders headers=new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<AppointmentMessage> entity=new HttpEntity<>(message,headers);
+        String jsonPayload = new ObjectMapper().writeValueAsString(message);
+        HttpEntity<String> entity=new HttpEntity<>(jsonPayload,headers);
         String url="https://whatsapp-messaging-medwell-api.vercel.app/whatsapp/appointment-confirmation";
         ResponseEntity<Map> resp=restTemplate.postForEntity(url,entity, Map.class);
 

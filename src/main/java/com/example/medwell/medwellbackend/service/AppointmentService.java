@@ -8,6 +8,7 @@ import com.example.medwell.medwellbackend.repository.CustomUserRepository;
 import com.example.medwell.medwellbackend.repository.DoctorServiceRepository;
 import com.example.medwell.medwellbackend.scheduler.AppointmentEmailScheduler;
 import com.example.medwell.medwellbackend.utility.MessagingUtility;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.mail.MessagingException;
 import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class AppointmentService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<?> createAppointmentPatient(Long userId, String serviceId, String doctorId, String slotId) throws MessagingException {
+    public ResponseEntity<?> createAppointmentPatient(Long userId, String serviceId, String doctorId, String slotId) throws MessagingException, JsonProcessingException {
         CustomUser patient=userRepository.getReferenceById(userId);
         DoctorService service=doctorServiceRepository.getReferenceById(UUID.fromString(serviceId));
         CustomUser doctor=service.getDoctor();

@@ -65,8 +65,8 @@ public class ProfileController {
     }
 
     @GetMapping("/services/{doctorId}")
-    public ResponseEntity<?> showDoctorServicesToPatient(@PathVariable(value = "doctor_id",required = true) Long doctor_id){
-        List<DoctorService> serviceList=doctorService.getDoctorServices(doctor_id);
+    public ResponseEntity<?> showDoctorServicesToPatient(@PathVariable(value = "doctorId",required = true) Long doctorId){
+        List<DoctorService> serviceList=doctorService.getDoctorServices(doctorId);
         return ResponseEntity.status(200).body(serviceList);
     }
 

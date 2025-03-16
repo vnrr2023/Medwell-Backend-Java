@@ -15,12 +15,10 @@ public class AppointmentSlotController {
     @Autowired
     private AppointmentSlotService appointmentSlotService;
 
-    @GetMapping("/get-slots-for-date-and-address/{date}/{address_id}")
-    public ResponseEntity<?> getSlotsForDate(@PathVariable("date") String date,@PathVariable("address_id") Long addressId){
+    @GetMapping("/get-slots-for-date-and-address/{date}/{addressId}")
+    public ResponseEntity<?> getSlotsForDate(@PathVariable("date") String date,@PathVariable("addressId") Long addressId){
         return appointmentSlotService.showSlots(date,addressId);
     }
-
-
 
 
 }
