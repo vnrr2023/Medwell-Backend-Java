@@ -184,7 +184,9 @@ public class AppointmentService {
             shiftedAppointment.setPatientMessage(message);
         }
         else{
-            appointment.setStatus(null);
+            appointment.setStatus("REJECTED");
+            appointment.setAppointmentSlot(null);
+            appointment.setDoctorServices(null);
             appointmentSlot.setStatus("Available");
             shiftedAppointment.setPatientMessage(message);
         }
