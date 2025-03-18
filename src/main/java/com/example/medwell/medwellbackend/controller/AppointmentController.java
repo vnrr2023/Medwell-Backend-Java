@@ -135,6 +135,11 @@ public class AppointmentController {
     }
 
 
+    @PostMapping("/doctor/update-patient-status")
+    public ResponseEntity<?> updatePatientStatusOfArrival(@RequestBody Map<String,String > data){
+        appointmentService.markPatientStatus(data.get("appointmentId"),data.get("status"));
+        return ResponseEntity.status(200).build();
+    }
 
 
 

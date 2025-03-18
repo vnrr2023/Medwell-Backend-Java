@@ -195,5 +195,16 @@ public class AppointmentService {
         shiftedAppointmentRepository.save(shiftedAppointment);
 
     }
+
+    public void markPatientStatus(String appointmentId,String status){
+        Appointment appointment=appointmentRepository.getReferenceById(UUID.fromString(appointmentId));
+        appointment.setStatus(status);
+        appointmentRepository.save(appointment);
+    }
+
+
+
+
 }
+
 
