@@ -15,15 +15,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private AuthInterceptor authInterceptor;
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedMethods("*")
-//                .allowCredentials(true)
-//                .allowedHeaders("*")
-//                .maxAge(3600)
-//                .allowedOrigins("http://localhost:8000");
-//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

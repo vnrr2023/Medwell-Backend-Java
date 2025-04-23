@@ -5,7 +5,9 @@ package com.example.medwell.medwellbackend.utility;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.Properties;
 
 @Component
@@ -19,9 +21,15 @@ public class SecretsLoader {
     private final String groqApiKey;
 
     public SecretsLoader() throws  Exception{
-        Properties props=new Properties();
-        FileReader reader=new FileReader("src/main/resources/secrets.properties");
-        props.load(reader);
+        Properties props = new Properties();
+
+        // Load secrets.properties from the classpath
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("secrets.properties");
+        if (inputStream == null) {
+            throw new FileNotFoundException("Property file 'secrets.properties' not found in the classpath");
+        }
+
+        props.load(inputStream);
         this.emailHost=props.getProperty("emailHost");
         this.emailPassword=props.getProperty("emailPassword");
         this.emailPort=Integer.parseInt(props.getProperty("emailPort"));

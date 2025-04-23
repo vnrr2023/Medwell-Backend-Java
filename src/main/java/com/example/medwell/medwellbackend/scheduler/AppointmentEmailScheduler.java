@@ -94,7 +94,6 @@ public class AppointmentEmailScheduler {
             }
 
         },reminderDate);
-        System.out.println("✅ Reminder scheduled for " + reminderType + " at " + reminderTime);
     }
 
 }

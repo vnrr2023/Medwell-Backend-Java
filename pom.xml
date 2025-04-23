@@ -146,6 +146,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>medwell-spring-boot</finalName>
 	</build>
 
 </project>

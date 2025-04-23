@@ -49,7 +49,6 @@ public class MessagingUtility {
             requestBody.put("message", message);
 
             String jsonPayload = new ObjectMapper().writeValueAsString(requestBody);
-            System.out.println("Sending JSON: " + jsonPayload); // Print payload
 
             HttpEntity<String> request = new HttpEntity<>(jsonPayload, headers);
 
@@ -58,10 +57,6 @@ public class MessagingUtility {
                     request,
                     String.class
             );
-
-            // Print response
-            System.out.println("Response Status: " + response.getStatusCode());
-            System.out.println("Response Body: " + response.getBody());
 
         }
 

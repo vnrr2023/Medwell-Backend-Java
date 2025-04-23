@@ -8,6 +8,7 @@ import com.example.medwell.medwellbackend.exceptions.DoctorServiceException;
 import com.example.medwell.medwellbackend.service.DoctorServiceService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,34 +24,42 @@ public class DoctorServiceController {
     private DoctorServiceService doctorServiceService;
 
     @PostMapping("/add_service")
-    public ResponseEntity<?> addService(@RequestBody DoctorServiceReqDto doctorServiceReqDto, HttpServletRequest request){
-        String userId= (String) request.getAttribute("user_id");
-        return doctorServiceService.addService(doctorServiceReqDto,userId);
+    public ResponseEntity<?> addService(@RequestBody DoctorServiceReqDto doctorServiceReqDto,@RequestAttribute("user_id") Long user_id){
+        try {
+            return doctorServiceService.addService(doctorServiceReqDto,user_id);
+        } catch (Exception e) {
+            throw new DoctorServiceException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/get_services")
     public ResponseEntity<?> getServices(@RequestAttribute("user_id") Long user_id){
-//        String userId= (String) request.getAttribute("user_id");
-        List<DoctorService> doctorServices= doctorServiceService.getDoctorServices(user_id);
-        return ResponseEntity.status(200).body(Map.of("services",doctorServices));
+        try {
+            List<DoctorService> doctorServices= doctorServiceService.getDoctorServices(user_id);
+            return ResponseEntity.status(200).body(Map.of("services",doctorServices));
+        } catch (Exception e) {
+            throw new DoctorServiceException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/update_service")
     public ResponseEntity<?> updateService(@RequestBody DoctorServiceReqDto doctorServiceReqDto){
-        System.out.println(doctorServiceReqDto);
-        return doctorServiceService.updateDoctorService(doctorServiceReqDto);
+        try {
+            return doctorServiceService.updateDoctorService(doctorServiceReqDto);
+        } catch (Exception e) {
+            throw new DoctorServiceException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
     }
 
     @PostMapping("/delete_service")
     public   ResponseEntity<?> deleteDoctorService(@RequestBody DoctorServiceReqDto doctorServiceReqDto){
-        return doctorServiceService.deleteServiceForDoctor(doctorServiceReqDto.getServiceId());
+        try {
+            return doctorServiceService.deleteServiceForDoctor(doctorServiceReqDto.getServiceId());
+        } catch (Exception e) {
+            throw new DoctorServiceException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @ExceptionHandler(DoctorServiceException.class)
-    public ResponseEntity<?> handleException(DoctorServiceException exception){
-        ErrorResponse response=new ErrorResponse(exception.getMssg(),exception.getStatus(),new Date());
-        return new ResponseEntity<>(response,exception.getStatus());
-    }
 
 }

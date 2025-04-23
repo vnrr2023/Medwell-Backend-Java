@@ -24,8 +24,8 @@ public class DoctorServiceService {
     private CustomUserRepository customUserRepository;
 
 
-    public ResponseEntity<?> addService(DoctorServiceReqDto doctorServiceReqDto, String userId) {
-        CustomUser doctor= customUserRepository.getReferenceById(Long.parseLong(userId));
+    public ResponseEntity<?> addService(DoctorServiceReqDto doctorServiceReqDto, Long userId) {
+        CustomUser doctor= customUserRepository.getReferenceById(userId);
         DoctorService doctorService= DoctorService.builder().serviceName(doctorServiceReqDto.getServiceName())
                 .serviceAmount(doctorServiceReqDto.getAmount()).doctor(doctor).build();
         doctorServiceRepository.save(doctorService);
